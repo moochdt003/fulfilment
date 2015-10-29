@@ -1,0 +1,57 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27 Oct 2015, 3:48:58 PM
+    Author     : David Muchatibaya
+    Title      : Fulfilment Interface style sheet
+*/
+
+#TB_ajaxContent{
+    width:100%;
+    height:100%;
+}
+
+#TB_ajaxContent label{
+    width:115px;
+    
+}
+
+#TB_window{
+   width:680px; 
+}
+
+.items_to_fulfil table{
+ 
+    font-size:11px; 
+    
+}
+
+.items_to_fulfil table tr th{
+ 
+ background-color:#CCC;
+ text-align:center;
+ //width:100%;
+    
+}
+
+.items_to_fulfil{
+            
+}
+
+.items_to_fulfil tr th{
+      background-color:#CCC;
+         
+}
+
+.fulfiled_orders  tr th{
+     background-color:#CCC;
+ 
+}
+
+table tr th{
+    
+    text-align:center;
+}
