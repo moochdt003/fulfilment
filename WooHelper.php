@@ -58,14 +58,15 @@ class WooHelper {
                 $order_item_obj->length = $product->get_length();
                 $order_item_obj->width = $product->get_width();
                 $order_item_obj->height = $product->get_height();
-                $order_item_obj->product_barcode = $variation->__get('product_barcode_upc');
+                //$order_item_obj->product_barcode = $variation->__get('product_barcode_upc');
             }
             
             $item_objs[] = $order_item_obj;
         }
        // var_dump($item_objs);
         // Display Custom Field Value
-       
+        $david = get_post_meta( get_the_ID(), 'product_barcode_upc', true );
+        var_dump($david);
         return $item_objs;
     }
 }
