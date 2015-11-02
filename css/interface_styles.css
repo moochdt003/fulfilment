@@ -10,7 +10,7 @@ and open the template in the editor.
 */
 
 #TB_ajaxContent{
-    width:100%;
+    width:100% !important; 
     height:100%;
 }
 
@@ -20,13 +20,12 @@ and open the template in the editor.
 }
 
 #TB_window{
-   width:680px; 
+   width:750px !important;
+   font-size: 10px !important;
 }
 
 .items_to_fulfil table{
- 
-    font-size:11px; 
-    
+ font-size: 10px;
 }
 
 .items_to_fulfil table tr th{
@@ -43,7 +42,12 @@ and open the template in the editor.
 
 .items_to_fulfil tr th{
       background-color:#CCC;
-         
+      font-size: 12px !important;
+}
+
+.items_to_fulfil tr td{
+      //background-color:#CCC;
+      font-size: 12px !important;
 }
 
 .fulfiled_orders  tr th{
@@ -54,4 +58,24 @@ and open the template in the editor.
 table tr th{
     
     text-align:center;
+}
+
+.main_fulfiment_table tr th{
+    /* width: 60px !important; */
+}
+
+
+.edit_fulfilment{
+    cursor:pointer;
+    
+}
+
+.show_fulfilments{
+    
+    cursor:pointer;   
+}
+
+.isEmpty{
+ display:none;   
+    
 }
