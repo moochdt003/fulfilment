@@ -6,7 +6,7 @@ class FulfilmentObj {
     public $order_id;
     public $online_store;
     public $inbound_carrier;
-    public $tracking_number;
+    public $carrier_tracking_number;
     public $invoice_amount;
     public $created_user_id;
     public $created_date;
@@ -18,7 +18,7 @@ class FulfilmentObj {
         if (empty($this->online_store)) {
             $errors[] = "Online store is required";
         }
-        if (empty($this->tracking_number)) {
+        if (empty($this->carrier_tracking_number)) {
             $errors[] = "Tracking Number is required";
         }
         if (empty($this->inbound_carrier)) {

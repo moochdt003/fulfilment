@@ -14,7 +14,7 @@
             <p><label for="inbound_carrier">Inbound Carrier:</label>
                 <input type="text" name="inbound_carrier" /></p>
             <p><label for="online_store">Tracking Number:</label>
-                <input type="text" name="tracking_number" />
+                <input type="text" name="carrier_tracking_number" />
             </p>
             <p><label for="invoice_Amount">Invoice Amount:</label><input type="text" name="invoice_amount" />
             </p>

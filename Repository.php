@@ -18,7 +18,7 @@ class Repository {
             $fulfilmentObj->order_id = $fulfilment->order_id;
             $fulfilmentObj->online_store = $fulfilment->online_store;
             $fulfilmentObj->inbound_carrier = $fulfilment->inbound_carrier;
-            $fulfilmentObj->tracking_number = $fulfilment->tracking_number;
+            $fulfilmentObj->carrier_tracking_number = $fulfilment->carrier_tracking_number;
             $fulfilmentObj->invoice_amount = $fulfilment->invoice_amount;
             $fulfilmentObj->created_user_id = $fulfilment->created_user_id;
             $fulfilmentObj->created_date = $fulfilment->created_date;
@@ -30,6 +30,25 @@ class Repository {
         return $fulfilmentObjs;
     }
 
+    static function fetch_fulfilment($fulfilment_id) {
+        global $wpdb;
+
+        $fulfilment = $wpdb->get_row("SELECT * FROM `moa_order_fulfilment` where `id` = $fulfilment_id ");
+
+        $fulfilmentObj = new FulfilmentObj();
+        $fulfilmentObj->id = $fulfilment->id;
+        $fulfilmentObj->order_id = $fulfilment->order_id;
+        $fulfilmentObj->online_store = $fulfilment->online_store;
+        $fulfilmentObj->inbound_carrier = $fulfilment->inbound_carrier;
+        $fulfilmentObj->carrier_tracking_number = $fulfilment->carrier_tracking_number;
+        $fulfilmentObj->invoice_amount = $fulfilment->invoice_amount;
+        $fulfilmentObj->created_user_id = $fulfilment->created_user_id;
+        $fulfilmentObj->created_date = $fulfilment->created_date;
+        $fulfilmentObj->items = self::fetch_fulfilment_items($fulfilmentObj->id);
+
+        return $fulfilmentObj;
+    }
+    
     static function fetch_fulfilment_items($fulfilment_id) {
         global $wpdb;
 
@@ -56,12 +75,12 @@ class Repository {
 
         $wpdb->query($wpdb->prepare(
                 "INSERT INTO moa_order_fulfilment
-		(order_id, online_store, inbound_carrier, tracking_number, invoice_amount, created_user_id)
+		(order_id, online_store, inbound_carrier, carrier_tracking_number, invoice_amount, created_user_id)
 		VALUES ( %d, %s, %s, %s, %s, %d )",
                 $fulfilment->order_id,
                 $fulfilment->online_store,
                 $fulfilment->inbound_carrier,
-                $fulfilment->tracking_number,
+                $fulfilment->carrier_tracking_number,
                 $fulfilment->invoice_amount,
                 $fulfilment->created_user_id
         ));

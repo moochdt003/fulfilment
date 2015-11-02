@@ -2,38 +2,9 @@
 include_once('FulfilmentObj.php');
 include_once('Repository.php');
 include_once('WooHelper.php');
+include_once('elogix_proxy.php');
+include_once('fulfilment_posting.php');
 
-if ('POST' == $_SERVER['REQUEST_METHOD'] && $_POST['submit'] == "Add New" && isset($_POST['submit'])) {
-    $fulfilment = new FulfilmentObj();
-
-    $fulfilment->order_id = $_GET['order'];
-    $fulfilment->online_store = $_POST['online_store'];
-    $fulfilment->inbound_carrier = $_POST['inbound_carrier'];
-    $fulfilment->tracking_number = $_POST['tracking_number'];
-    $fulfilment->invoice_amount = $_POST['invoice_amount'];
-    $fulfilment->created_user_id = get_current_user_id();
-    
-    $fulfilment->items = array();
-    
-    for ($i = 0; $i < sizeof($_POST['order_item_id']); $i++) {
-        $itemObj = new FulfilmentItemObj();
-        
-        $itemObj->order_item_id = $_POST['order_item_id'][$i];
-        $itemObj->item_price = $_POST['item_price'][$i];
-        $itemObj->quantity = $_POST['fulfilled_qty'][$i];
-        
-        $fulfilment->items[] = $itemObj;
-    }
-
-    $errors = $fulfilment->validate();
-
-    if (!empty($errors)) {
-        //	print_r($errors);
-        return;
-    }
-
-    Repository::insert_fulfilment($fulfilment);
-}
 
 //set order id variable
 if (isset($_GET['order'])) {
@@ -64,6 +35,7 @@ foreach ($order_items as $order_item) {
     
     $items_not_fulfiled[] = $order_item;
 }
+
 ?>
 
 <div class="wrap"><div id="icon-tools" class="icon32"></div>
@@ -77,27 +49,36 @@ foreach ($order_items as $order_item) {
 
     <table width="100%" border="1" class="widefat">
         <tr>
+            <th>&nbsp;</th>
             <th>Fulfillment ID</th>
             <th>Online Store</th>
-            <th>Inbound carrier</th>
-            <th>Inbound tracking number</th>
+            <th>Inbound<br> carrier</th>
+            <th>Inbound<br>tracking number</th>
             <th>Invoice amount</th>
             <th>Date</th>
             <th>Status</th>
         </tr>
         <?php foreach ($fulfilments as $fulfilment) : ?>
             <tr>
+                <td><img class="show_fulfilments" src="../wp-content/plugins/fulfilment/plus.png" height="auto" width="20px" alt="collapse"><!--button class="show_fulfilments button button-primary">View</button--></td>
                 <td><?php echo $fulfilment->id ?></td>
                 <td><?php echo $fulfilment->online_store ?></td>
                 <td><?php echo $fulfilment->inbound_carrier ?></td>
-                <td><?php echo $fulfilment->tracking_number ?></td>
+                <td><?php echo $fulfilment->carrier_tracking_number ?></td>
                 <td><?php echo $fulfilment->invoice_amount ?></td>
                 <td><?php echo $fulfilment->created_date ?></td>
-                <td><button class="show_fulfilments button button-primary">Show items</button></td>
+                <td>
+                    <button class="button button-primary">Edit</button>
+                    <form  method="POST">
+                        <input type="hidden" value="<?php echo $fulfilment->id ?>" name="fulfilment_id">
+                        <input  type="submit" id="submit_to_elogix" name="submit_to_elogix" class="button button-primary" value="Submit to Elogix" >
+                    </form>
+                </td>
             </tr>
 
             <tr class="hide_show">
-                <td colspan="6"><strong>Fulfillment items (ID: <?php echo $fulfilment->id ?>):</strong>
+                <td></td>
+                <td colspan="7"><strong>Fulfillment items (ID: <?php echo $fulfilment->id ?>):</strong>
 
                     <table width="100%" border="1" class="widefat">
                         <tr>
@@ -136,6 +117,7 @@ foreach ($order_items as $order_item) {
                         <?php endforeach; ?>
                     </table>
                 </td>
+                 
             </tr>
             <tr>
 
@@ -191,7 +173,4 @@ foreach ($order_items as $order_item) {
 
 <script src="../wp-content/plugins/fulfilment/js/fulfilment.js" type="text/javascript"></script>
 <link   href="../wp-content/plugins/fulfilment/css/interface_styles.css" rel="stylesheet">
-    
-
-
 
