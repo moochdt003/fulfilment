@@ -17,9 +17,9 @@ class ElogixProxy {
                 (
                 "auth" => array
                     (
-                    "guid" => "defa57a5-3823-4a3a-96ff-0c969cd18da4",
-                    "username" => "orders@mallofamerica.co.za",
-                    "password" => "testPASS123"
+                    "guid" => "9216E6C3-0C67-42D2-A68D-1AA440CFAC3B",
+                    "username" => "user001@mallofamerica.com",
+                    "password" => "M@ll0fUSA_"
                 ),
                 "inbound-shipment" => array
                     (
@@ -87,7 +87,11 @@ class ElogixProxy {
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $request_json);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);                                                                      
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',                                                                                
+            'Content-Length: ' . strlen($request_json))                                                                       
+        );       
 
         $result_json = curl_exec($ch);
         $error = null;
@@ -116,7 +120,7 @@ class ElogixProxy {
         
         if (!$error) {
             $wpdb->update("moa_order_fulfilment", array(
-                "moa_tracking_number" => $result["trackNo"],
+                "moa_tracking_number" => $result->trackNo,
                 "sent_user_id" => get_current_user_id(),
                 "sent_date" => $timestamp,
                 ),

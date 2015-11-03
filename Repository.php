@@ -100,5 +100,42 @@ class Repository {
 
         $fulfilment_item->id = $wpdb->insert_id;
     }
+    
+    
+     static function update_fulfilment($fulfilment) {
+        global $wpdb;
 
+        $wpdb->update( 
+                    'moa_order_fulfilment', 
+                    array( 
+                            'online_store' => '$fulfilment->online_store',
+                            'inbound_carrier' => ' $fulfilment->inbound_carrier',
+                            'carrier_tracking_number' => '$fulfilment->carrier_tracking_number',
+                            'invoice_amount' => '$fulfilment->invoice_amount',
+                            'created_user_id' => $fulfilment->created_user_id
+                    ), 
+                    array( 'fulfilment_id' => $id ), 
+                    array( 
+                            '%s',	// value1
+                            '%s',	// value2
+                            '%s',	// value3
+                            '%s',	// value4
+                            '%d'	// value5
+                    ), 
+                    array( '%d' ) 
+            );
+        /*
+        foreach ($fulfilment->items as $item) {
+            $item->fulfilment_id = $fulfilment->id;
+            self::insert_fulfilment_item($item);
+        }*/
+    }
+    
+        static function update_fulfilment_item($fulfilment_item) {
+        global $wpdb;
+
+        $wpdb->insert('moa_fulfilment_order_item', (array) $fulfilment_item);
+
+        $fulfilment_item->id = $wpdb->insert_id;
+    }
 }

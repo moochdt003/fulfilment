@@ -15,8 +15,7 @@ and open the template in the editor.
 }
 
 #TB_ajaxContent label{
-    width:115px;
-    
+    /* width: 195px !important; */
 }
 
 #TB_window{
@@ -38,6 +37,8 @@ and open the template in the editor.
 
 .items_to_fulfil{
             
+    width: 725px;
+
 }
 
 .items_to_fulfil tr th{
@@ -76,6 +77,5 @@ table tr th{
 }
 
 .isEmpty{
- display:none;   
-    
+ display:none;
 }
