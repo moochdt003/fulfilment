@@ -15,7 +15,7 @@ and open the template in the editor.
 }
 
 #TB_ajaxContent label{
-    /* width: 195px !important; */
+    width: 242px !important;
 }
 
 #TB_window{
@@ -78,4 +78,14 @@ table tr th{
 
 .isEmpty{
  display:none;
+}
+
+.moa_attributes{
+    
+    text-transform: uppercase;
+}
+
+.widefat ul{
+    margin-top: 0px;
+    
 }

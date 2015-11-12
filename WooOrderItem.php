@@ -9,6 +9,7 @@ class WooOrderItem {
     public $model;
     public $sale_price;
     public $attributes;
+    public $product_url;
     public $meta;
     public $variation_id;
     public $quantity_needed;

@@ -120,7 +120,7 @@ class ElogixProxy {
         
         if (!$error) {
             $wpdb->update("moa_order_fulfilment", array(
-                "moa_tracking_number" => $result->trackNo,
+                "moa_tracking_number" => $result->{'elogx-incoming'}->trackNo,
                 "sent_user_id" => get_current_user_id(),
                 "sent_date" => $timestamp,
                 ),
@@ -130,5 +130,61 @@ class ElogixProxy {
             );
         }
     }
+    
+    static function tracking_request($fulfilment_id,$trackNo,$orderNo){
+        
+            $request_obj = array(
+                            "elogx-incoming" => array
+                                    (
+                                    "auth" => array
+                                        (
+                                        "guid" => "9216E6C3-0C67-42D2-A68D-1AA440CFAC3B",
+                                        "username" => "user001@mallofamerica.com",
+                                        "password" => "M@ll0fUSA_"
+                                        ),
+                                    "filter" => array
+                                        (
+                                        "orderNo"=> $orderNo,
+                                        "fulfilmentNo" => $fulfilment_id,
+                                        "trackNo"=> $trackNo
+                                        )
+                                     )
+                            );
+        
+      
+            $request_json = json_encode($request_obj);
 
+           
+            $url = 'http://elogx.v2.project-stage.com/api/smart-track.aspx?format=json';
+            $ch = curl_init($url);
+
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request_json);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, 1);                                                                      
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+                'Content-Type: application/json',                                                                                
+                'Content-Length: ' . strlen($request_json))                                                                       
+            );       
+
+            $result_json = curl_exec($ch);
+            $error = null;
+          
+            if (curl_errno($ch)) {
+                $error = curl_error($ch);
+            } else {
+                curl_close($ch);
+
+                $result = json_decode($result_json);
+                if ($result->error) {
+                    $error = $result->error->code;
+                }
+            }
+
+               
+        
+    }
+        
+        
+        
+    
 }

@@ -64,6 +64,7 @@ class WooHelper {
                 $order_item_obj->height = $variation->__get('height');
                 $order_item_obj->product_barcode = get_post_meta($order_item_obj->variation_id, 'variation_barcode_upc', true);
                 $order_item_obj->model = get_post_meta($order_item_obj->variation_id, 'variation_model', true);
+                $order_item_obj->product_url = get_post_meta($order_item_obj->variation_id, 'variation_product_url', true);
             } else {
                 $product = new WC_Product($order_item_obj->product_id);
                 $color = $product->get_variation_attributes();
@@ -74,6 +75,7 @@ class WooHelper {
                 $order_item_obj->height = $product->get_height();
                 $order_item_obj->product_barcode = get_post_meta($order_item_obj->product_id, 'product_barcode_upc', true);
                 $order_item_obj->model = get_post_meta($order_item_obj->product_id, 'product_model', true);
+                $order_item_obj->product_url = get_post_meta($order_item_obj->product_id, 'product_url', true);
             }
 
             $item_objs[$order_item_id] = $order_item_obj;

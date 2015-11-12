@@ -31,6 +31,7 @@ include_once('FulfilmentObj.php');
 include_once('createFulfilmentDb.php');
 include_once('fulfilment_hs_code.php');
 include_once('product_custom_fields.php');
+//include_once('creating_tracking_page.php');
 //include_once('order_info.php');
 
 /* Runs when plugin is activated */
@@ -82,6 +83,7 @@ function my_plugin_install() {
     add_option('my_plugin_page_id', $the_page_id);
 
     fulfilment_setup_db();
+    //moa_tracking_page();
 }
 
 function my_plugin_remove() {

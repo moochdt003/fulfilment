@@ -16,29 +16,23 @@
         <input type="hidden" name="fulfilmentID" value='<?php echo $fulfilment->id ?>'>
         <div id="postbox" >
             <!-- New fulfillment Form -->
-            <table>
-                <tr>
-                    <td><label for="online_store">Online Store:</label></td>
-                     <td><input type="text" name="online_store" value="<?php echo $fulfilment->online_store ?>" /></td>
-                </tr>
-                <tr>
-                    <td><label for="inbound_carrier">Inbound Carrier:</label></td>
-                    <td><input type="text" name="inbound_carrier"  value="<?php echo $fulfilment->inbound_carrier ?>"/></td>
-                </tr>
-                <tr>     
-                    <td><label for="online_store">Tracking Number:</label></td>
-                    <td><input type="text" name="carrier_tracking_number" value="<?php echo $fulfilment->carrier_tracking_number ?>" /></td>
-                </tr>
-                <tr>
-                    <td><label for="invoice_Amount">Invoice Amount:</label></td>
-                    <td><input type="text" name="invoice_amount" value="<?php echo $fulfilment->invoice_amount ?>"/></td>
-                </tr>
-            </table>    
+
+            <p><label for="online_store">Online Store:</label>
+                <input type="text" name="online_store" value="<?php echo $fulfilment->online_store ?>" />
+            </p>
+            <p><label for="inbound_carrier">Inbound Carrier:</label>
+                <input type="text" name="inbound_carrier"  value="<?php echo $fulfilment->inbound_carrier ?>"/></p>
+            <p><label for="online_store">Tracking Number:</label>
+                <input type="text" name="carrier_tracking_number" value="<?php echo $fulfilment->carrier_tracking_number ?>" />
+            </p>
+            <p><label for="invoice_Amount">Invoice Amount:</label>
+                <input type="text" name="invoice_amount" value="<?php echo $fulfilment->invoice_amount ?>"/>
+            </p>
         </div>
         <!-- Grid containing items that need to be fulfilled -->
         <div class="items_to_fulfil">
             <h4>Items be Fulfilled:</h4>
-            <table width="100%" border="1" class="widefat striped wp-list-table">
+            <table width="100%" border="1" class="widefat">
                 <tr>
                     <th>Product</th>
                     <th>Quantity <br>Still Required</th>

@@ -7,6 +7,7 @@ function fulfilment_setup_db() {
     custom_db_fulfilment_item_install();
     custom_db_fulfilment_install();
     custom_store_fulfilment_object();
+    
 }
 
 //function to create the fulfiment table					
@@ -20,6 +21,7 @@ function custom_db_fulfilment_install() {
                             `invoice_amount` numeric(15,2) NOT NULL,
                             `created_user_id` int(11) NOT NULL,
                             `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                            `edit_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                             `moa_tracking_number` varchar(30) NOT NULL,
                             `sent_user_id` int(11) NULL,
                             `sent_date` timestamp NULL,
@@ -32,7 +34,7 @@ function custom_db_fulfilment_install() {
 
 //function to create the fulfiment table
 function custom_db_fulfilment_item_install() {
-    $sql = "CREATE TABLE IF NOT EXISTS moa_fulfilment_order_item (
+    $sql = "CREATE TABLE IF NOT EXISTS moa_order_items (
                             `id` int(11) NOT NULL AUTO_INCREMENT,
                             `fulfilment_id` int(11) NOT NULL,
                             `order_item_id` int(11) NOT NULL,
@@ -60,3 +62,7 @@ function custom_store_fulfilment_object() {
                       ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;";
     dbDelta($sql);
 }
+
+
+
+

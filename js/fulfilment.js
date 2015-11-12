@@ -11,10 +11,26 @@ and open the template in the editor.
 
 
 jQuery(function($){
+        
+    //handles hiding/show effect of fullfilment items in the fulfiled orders ection    
        $(".hide_show").hide();
         $(".show_fulfilments").on("click", function () {
             
             $(this).closest('tr').next('tr').toggle();
         });
        
-    });
+ 
+    
+    selected_id = null;
+        $('.edit_fulfilment').click(function(){
+            selected_id = $(this).attr('id');
+           $('input[name="fulfilmentID"]').val(selected_id);
+
+        }); 
+
+        $(".edit_fulfilment").click(function() {
+            var id = $(this).data("id");
+            
+            
+        });
+   });

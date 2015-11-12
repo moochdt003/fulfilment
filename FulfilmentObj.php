@@ -24,27 +24,21 @@ class FulfilmentObj {
         if (empty($this->inbound_carrier)) {
             $errors[] = "Carrier name is required";
         }
-        if(empty($this->items)) {
+        if (empty($this->items)) {
             $errors[] = "There are no items to fulfil.";
         }
-       //Loop through and validate fulfilment items
-        
+        //Loop through and validate fulfilment items
+
         return $errors;
     }
 
-}
+    function getNumberOfItemsFulfilled() {
+        $total_quantity = 0;
 
-function update_fulfilment_item($order_id) {
+        foreach ($this->items as $item) {
+            $total_quantity += $item->quantity;
+        }
 
-    $fulfilments_item_order = new WC_Order($order_id);
-    $fulfilment_items = $fulfilments_item_order->get_items(); //to get info about product
-
-    foreach ($fulfilment_items as $order_product_detail) {
-        echo "<tr>
-                                <td>" . $order_product_detail['product_id'] . "</td>
-                                <td>" . $order_product_detail['name'] . "</td>
-                                <td>" . $order_product_detail['qty'] . "</td>
-                                <td>" . $order_product_detail['line_total'] . "</td>
-                         </tr>";
+        return $total_quantity;
     }
 }

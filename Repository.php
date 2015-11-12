@@ -48,11 +48,11 @@ class Repository {
 
         return $fulfilmentObj;
     }
-    
+
     static function fetch_fulfilment_items($fulfilment_id) {
         global $wpdb;
 
-        $fulfilment_items = $wpdb->get_results("SELECT * FROM `moa_fulfilment_order_item` where `fulfilment_id` = $fulfilment_id");
+        $fulfilment_items = $wpdb->get_results("SELECT * FROM `moa_order_items` where `fulfilment_id` = $fulfilment_id");
         $fulfilment_item_objs = array();
 
         foreach ($fulfilment_items as $fulfilment_item) {
@@ -74,15 +74,9 @@ class Repository {
         global $wpdb;
 
         $wpdb->query($wpdb->prepare(
-                "INSERT INTO moa_order_fulfilment
+                        "INSERT INTO moa_order_fulfilment
 		(order_id, online_store, inbound_carrier, carrier_tracking_number, invoice_amount, created_user_id)
-		VALUES ( %d, %s, %s, %s, %s, %d )",
-                $fulfilment->order_id,
-                $fulfilment->online_store,
-                $fulfilment->inbound_carrier,
-                $fulfilment->carrier_tracking_number,
-                $fulfilment->invoice_amount,
-                $fulfilment->created_user_id
+		VALUES ( %d, %s, %s, %s, %s, %d )", $fulfilment->order_id, $fulfilment->online_store, $fulfilment->inbound_carrier, $fulfilment->carrier_tracking_number, $fulfilment->invoice_amount, $fulfilment->created_user_id
         ));
 
         $fulfilment->id = $wpdb->insert_id;
@@ -96,46 +90,36 @@ class Repository {
     static function insert_fulfilment_item($fulfilment_item) {
         global $wpdb;
 
-        $wpdb->insert('moa_fulfilment_order_item', (array) $fulfilment_item);
+        $wpdb->insert('moa_order_items', (array) $fulfilment_item);
 
         $fulfilment_item->id = $wpdb->insert_id;
     }
-    
-    
-     static function update_fulfilment($fulfilment) {
-        global $wpdb;
 
-        $wpdb->update( 
-                    'moa_order_fulfilment', 
-                    array( 
-                            'online_store' => '$fulfilment->online_store',
-                            'inbound_carrier' => ' $fulfilment->inbound_carrier',
-                            'carrier_tracking_number' => '$fulfilment->carrier_tracking_number',
-                            'invoice_amount' => '$fulfilment->invoice_amount',
-                            'created_user_id' => $fulfilment->created_user_id
-                    ), 
-                    array( 'fulfilment_id' => $id ), 
-                    array( 
-                            '%s',	// value1
-                            '%s',	// value2
-                            '%s',	// value3
-                            '%s',	// value4
-                            '%d'	// value5
-                    ), 
-                    array( '%d' ) 
-            );
-        /*
+    static function update_fulfilment($fulfilment, $edit_fulfilment_id) {
+        global $wpdb;
+        $timestamp = date('Y-m-d G:i:s');
+        $wpdb->update('moa_order_fulfilment', array(
+            'online_store' => $fulfilment->online_store,
+            'inbound_carrier' => $fulfilment->inbound_carrier,
+            'carrier_tracking_number' => $fulfilment->carrier_tracking_number,
+            'invoice_amount' => $fulfilment->invoice_amount,
+            'created_user_id' => $fulfilment->created_user_id,
+            'edit_date' => $timestamp
+                ), array('id' => $edit_fulfilment_id)
+        );
+
         foreach ($fulfilment->items as $item) {
-            $item->fulfilment_id = $fulfilment->id;
-            self::insert_fulfilment_item($item);
-        }*/
+            self::update_fulfilment_item($item);
+        }
     }
-    
-        static function update_fulfilment_item($fulfilment_item) {
+
+    static function update_fulfilment_item($fulfilment_item) {
         global $wpdb;
 
-        $wpdb->insert('moa_fulfilment_order_item', (array) $fulfilment_item);
-
-        $fulfilment_item->id = $wpdb->insert_id;
+        $wpdb->update('moa_order_items', array(
+            'quantity' => $fulfilment_item->quantity,
+            'item_price' => $fulfilment_item->item_price
+        ), array('id' => $fulfilment_item->id));
     }
+
 }

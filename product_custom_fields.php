@@ -3,16 +3,22 @@
 add_action('woocommerce_product_options_general_product_data', 'woo_add_barcode_input_general_fields');
 // Save Fields
 add_action('woocommerce_process_product_meta', 'woo_add_barcode_input_general_fields_save');
-
 // Display Fields
 add_action('woocommerce_product_options_general_product_data', 'woo_add_model_input_general_fields');
 // Save Fields
 add_action('woocommerce_process_product_meta', 'woo_add_model_input_general_fields_save');
+// Display Fields
+add_action('woocommerce_product_options_general_product_data', 'woo_add_product_url_input_general_fields');
+// Save Fields
+add_action('woocommerce_process_product_meta', 'woo_add_product_url_input_general_fields_save');
+
 
 add_action('woocommerce_product_after_variable_attributes', 'variable_fields', 10, 3);
 //add_action( 'woocommerce_product_after_variable_attributes_js', 'variable_fields_js' );
 add_action('woocommerce_save_product_variation', 'save_variable_fields', 10, 1);
 add_action('woocommerce_save_product_variation', 'save_variable_model_fields', 10, 1);
+add_action('woocommerce_save_product_variation', 'save_variable_product_url_fields', 10, 1);
+
 
 function woo_add_barcode_input_general_fields() {
 
@@ -36,7 +42,7 @@ function woo_add_barcode_input_general_fields() {
 
 function woo_add_barcode_input_general_fields_save($post_id) {
 
-    // Barcode/UPC Text Field
+    // Model Field
     $woocommerce_text_field = $_POST['product_barcode_upc'];
     if (!empty($woocommerce_text_field)) {
         update_post_meta($post_id, 'product_barcode_upc', esc_attr($woocommerce_text_field));
@@ -49,7 +55,7 @@ function woo_add_model_input_general_fields() {
 
     echo '<div class="options_group">';
 
-    // Barcode/UPC code field
+    // Model field
     woocommerce_wp_text_input(
             array(
                 'id' => 'product_model',
@@ -71,6 +77,36 @@ function woo_add_model_input_general_fields_save($post_id) {
         update_post_meta($post_id, 'product_model', esc_attr($woocommerce_text_field));
     }
 }
+
+function woo_add_product_url_input_general_fields() {
+
+    global $woocommerce, $post;
+
+    echo '<div class="options_group">';
+
+    // product URL code field
+    woocommerce_wp_text_input(
+            array(
+                'id' => 'product_url',
+                'label' => __('Product URL', 'woocommerce'),
+                'placeholder' => 'Enter product URL',
+                'desc_tip' => 'true',
+                'description' => __('Enter the product URL.', 'woocommerce')
+            )
+    );
+
+    echo '</div>';
+}
+
+function woo_add_product_url_input_general_fields_save($post_id) {
+
+    // product URL Text Field
+    $woocommerce_text_field = $_POST['product_url'];
+    if (!empty($woocommerce_text_field)) {
+        update_post_meta($post_id, 'product_url', esc_attr($woocommerce_text_field));
+    }
+}
+
 
 //Display Fields
 //JS to add fields for new variations
@@ -120,7 +156,23 @@ function variable_fields($loop, $variation_data, $variation) {
         </td>
     </tr>
 
-
+   <tr>
+        <td>
+            <?php
+            // Text Field
+            woocommerce_wp_text_input(
+                    array(
+                        'id' => 'variation_product_url[' . $loop . ']',
+                        'label' => __('Roduct URL:', 'woocommerce'),
+                        'placeholder' => 'Product URL',
+                        'desc_tip' => 'true',
+                        'description' => __('Enter the products URL here.', 'woocommerce'),
+                        'value' => get_post_meta($variation->ID, 'variation_product_url', true)
+                    )
+            );
+            ?>
+        </td>
+    </tr>
     <?php
 }
 
@@ -148,5 +200,16 @@ function save_variable_model_fields($post_id) {
         $model = reset($_POST['variation_model']);
         $variation_id = (int) reset($variable_post_id);
         update_post_meta($variation_id, 'variation_model', stripslashes($model));
+    endif;
+}
+
+function save_variable_product_url_fields($post_id) {
+    if (isset($_POST['variable_sku'])) :
+        $variable_sku = $_POST['variable_sku'];
+        $variable_post_id = $_POST['variable_post_id'];
+
+        $model = reset($_POST['variation_product_url']);
+        $variation_id = (int) reset($variable_post_id);
+        update_post_meta($variation_id, 'variation_product_url', stripslashes($model));
     endif;
 }

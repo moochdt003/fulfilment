@@ -7,17 +7,24 @@
 
         <div id="postbox" >
             <!-- New fulfillment Form -->
-
-            <p><label for="online_store">Online Store:</label>
-                <input type="text" name="online_store" />
-            </p>
-            <p><label for="inbound_carrier">Inbound Carrier:</label>
-                <input type="text" name="inbound_carrier" /></p>
-            <p><label for="online_store">Tracking Number:</label>
-                <input type="text" name="carrier_tracking_number" />
-            </p>
-            <p><label for="invoice_Amount">Invoice Amount:</label><input type="text" name="invoice_amount" />
-            </p>
+            <table>
+                <tr>
+                     <td><label for="online_store">Online Store:</label></td>
+                     <td><input type="text" name="online_store" /></td>
+                </tr>
+                <tr>
+                     <td><label for="inbound_carrier">Inbound Carrier:</label></td>
+                     <td><input type="text" name="inbound_carrier" /></td>
+                </tr>
+                <tr>
+                    <td><label for="online_store">Tracking Number:</label></td>
+                     <td><input type="text" name="carrier_tracking_number" /></td>
+               </tr>
+                <tr>
+                    <td><label for="invoice_Amount">Invoice Amount:</label></td> 
+                    <td><input type="text" name="invoice_amount" /></td>
+               </tr>
+          </table>
             <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
             <?php wp_nonce_field('new-post'); ?>
            
@@ -26,7 +33,7 @@
         <!-- Grid containing items that need to be fulfilled -->
         <div class="items_to_fulfil">
             <h4>Items be Fulfilled:</h4>
-            <table width="100%" border="1" class="widefat">
+            <table width="100%" border="1" class="widefat striped wp-list-table">
                 <tr>
                     <th>Product</th>
                     <th>Quantity <br>Still Required</th>
@@ -46,7 +53,7 @@
                             <?php if ($order_item->attributes) : ?>
                             <ul>
                                 <?php foreach ($order_item->attributes as $key => $value) : ?>
-                                    <li><?php echo "$key:$value" ?></li>
+                                    <li class="moa_attributes"><?php echo str_replace("attribute_pa_","","$key:$value"); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                             <?php endif; ?>
@@ -60,7 +67,6 @@
             </table>
         </div>  
         <br>
-        
-         <input type="submit" value="Add New" tabindex="6" id="submit" name="submit" class="button button-primary" />
+       <input type="submit" value="Add New" tabindex="6" id="submit" name="submit" class="button button-primary" onclick="return confirm('Are you sure you want to add fulfilment?')" />
     </form>
 </div>
