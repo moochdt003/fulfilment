@@ -7,8 +7,10 @@ class FulfilmentObj {
     public $online_store;
     public $inbound_carrier;
     public $carrier_tracking_number;
+    public $moa_tracking_number;
     public $invoice_amount;
     public $created_user_id;
+    public $sent_user_id;
     public $created_date;
     public $items;
 
@@ -24,9 +26,7 @@ class FulfilmentObj {
         if (empty($this->inbound_carrier)) {
             $errors[] = "Carrier name is required";
         }
-        if (empty($this->items)) {
-            $errors[] = "There are no items to fulfil.";
-        }
+
         //Loop through and validate fulfilment items
 
         return $errors;
@@ -41,4 +41,5 @@ class FulfilmentObj {
 
         return $total_quantity;
     }
+
 }

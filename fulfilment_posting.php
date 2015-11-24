@@ -27,8 +27,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD'] && $_POST['submit'] == "Add New") {
     $errors = $fulfilment->validate();
 
     if (!empty($errors)) {
-        //	print_r($errors);
-        return;
+       return;
     }
 
     Repository::insert_fulfilment($fulfilment);

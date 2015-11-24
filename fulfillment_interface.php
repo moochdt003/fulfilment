@@ -53,6 +53,7 @@ $nothing = "";
     }else{
         $nothing = ''; 
     }
+    
 ?>
 
 <div class="wrap"><div id="icon-tools" class="icon32"></div>
@@ -90,17 +91,17 @@ $nothing = "";
                 <td><?php echo $fulfilment->online_store ?></td>
                 <td><?php echo $fulfilment->inbound_carrier ?></td>
                 <td><?php echo $fulfilment->carrier_tracking_number ?></td>
-                <td>&nbsp;</td>
+                <td><?php echo $fulfilment->moa_tracking_number ?></td>
                 <td><?php echo $fulfilment->invoice_amount ?></td>
-                <td><?php echo $fulfilment->created_user_id ?></td>
-                <td>&nbsp;</td>
+                <td><?php $creater_username = get_user_by('id', $fulfilment->created_user_id); echo $creater_username->user_login;?></td>
+                <td><?php $sent_username = get_user_by('id', $fulfilment->sent_user_id); echo $sent_username->user_login;?></td>
                 <td><?php echo $fulfilment->created_date ?></td>
                 <td> <a href="http://localhost/moadev/wp-content/plugins/fulfilment/edit_fulfilment_modal.php?edit_fulfilment_id=<?php echo $fulfilment->id ?>" class="thickbox">
                     <img src="../wp-content/plugins/fulfilment/images/add_edit_delete.jpg" height="auto" width="23px" title="Edit fulfilment" class="edit_fulfilment">
                     </a>
                     <form  method="POST" style="float:right;">
                         <input type="hidden" value="<?php echo $fulfilment->id ?>" name="fulfilment_id">
-                        <?php if ($fulfilment->getNumberOfItemsFulfilled() > 0) : ?>
+                        <?php if (empty($fulfilment->moa_tracking_number) && $fulfilment->getNumberOfItemsFulfilled() > 0) : ?>
                         <input  type="submit" id="submit_to_elogix" name="submit_to_elogix" class="button button-primary" value="Submit to Elogix" onclick="return confirm('Please confirm all details are correct before you sumbit fulfilment to Elogix. Click OK to continue or click CANCEL to stop the process!')" >
                         <?php endif; ?>
                     </form>

@@ -19,8 +19,10 @@ class Repository {
             $fulfilmentObj->online_store = $fulfilment->online_store;
             $fulfilmentObj->inbound_carrier = $fulfilment->inbound_carrier;
             $fulfilmentObj->carrier_tracking_number = $fulfilment->carrier_tracking_number;
+            $fulfilmentObj->moa_tracking_number = $fulfilment->moa_tracking_number;
             $fulfilmentObj->invoice_amount = $fulfilment->invoice_amount;
             $fulfilmentObj->created_user_id = $fulfilment->created_user_id;
+            $fulfilmentObj->sent_user_id = $fulfilment->sent_user_id;
             $fulfilmentObj->created_date = $fulfilment->created_date;
             $fulfilmentObj->items = self::fetch_fulfilment_items($fulfilmentObj->id);
 
@@ -41,8 +43,10 @@ class Repository {
         $fulfilmentObj->online_store = $fulfilment->online_store;
         $fulfilmentObj->inbound_carrier = $fulfilment->inbound_carrier;
         $fulfilmentObj->carrier_tracking_number = $fulfilment->carrier_tracking_number;
+        $fulfilmentObj->moa_tracking_number = $fulfilment->moa_tracking_number;
         $fulfilmentObj->invoice_amount = $fulfilment->invoice_amount;
         $fulfilmentObj->created_user_id = $fulfilment->created_user_id;
+        $fulfilmentObj->sent_user_id = $fulfilment->sent_user_id;
         $fulfilmentObj->created_date = $fulfilment->created_date;
         $fulfilmentObj->items = self::fetch_fulfilment_items($fulfilmentObj->id);
 

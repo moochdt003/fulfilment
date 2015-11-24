@@ -31,7 +31,7 @@ include_once('FulfilmentObj.php');
 include_once('createFulfilmentDb.php');
 include_once('fulfilment_hs_code.php');
 include_once('product_custom_fields.php');
-//include_once('creating_tracking_page.php');
+include_once('create_tracking_page.php');
 //include_once('order_info.php');
 
 /* Runs when plugin is activated */
@@ -41,8 +41,8 @@ register_deactivation_hook(__FILE__, 'my_plugin_remove');
 
 //Functions responsible for installing and initalising plugin in setup
 function my_plugin_install() {
-    $the_page_title = 'Mall of America - Fulfilment';
-    $the_page_name = 'Mall-of-America-Fulfilment';
+    $the_page_title = 'Mall of America - Tracking';
+    $the_page_name = 'Mall-of-America - Tracking';
 
     // the menu entry...
     delete_option("my_plugin_page_title");
@@ -61,7 +61,13 @@ function my_plugin_install() {
         // Create post object
         $_p = array();
         $_p['post_title'] = $the_page_title;
-        $_p['post_content'] = "This text may be overridden by the plugin. You shouldn't edit it.";
+        $_p['post_content'] ='<h1>Track your order here:</h1>'
+                                . '<form method="POST">'
+                                . '<p><input type="text" id="orderNo" name="orderNo" placeholder="Enter order number" /></p>'
+                                . '<h3>Or</h3>'
+                                . '<p><input type="text" id="trackNo" name="trackNo" placeholder="Enter tracking number" /></p>'
+                                . '<p><input type="submit" id="submit" name="submit" value="Submit" /></p>'
+                                . '</form>';
         $_p['post_status'] = 'publish';
         $_p['post_type'] = 'page';
         $_p['comment_status'] = 'closed';

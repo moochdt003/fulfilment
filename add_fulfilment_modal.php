@@ -3,26 +3,26 @@
 
 <div id="modal-window-id" style="display:none;">
     <h4>Add Fulfillment</h4>
-    <form method="post">    
+    <form method="post" onsubmit="return validateForm();" id="add_fulfilment" name="add_fulfilment">    
 
         <div id="postbox" >
             <!-- New fulfillment Form -->
             <table>
                 <tr>
                      <td><label for="online_store">Online Store:</label></td>
-                     <td><input type="text" name="online_store" /></td>
+                     <td><input type="text" id="online_store" name="online_store" /></td>
                 </tr>
                 <tr>
                      <td><label for="inbound_carrier">Inbound Carrier:</label></td>
-                     <td><input type="text" name="inbound_carrier" /></td>
+                     <td><input type="text" id ="inbound_carrier" name="inbound_carrier" /></td>
                 </tr>
                 <tr>
                     <td><label for="online_store">Tracking Number:</label></td>
-                     <td><input type="text" name="carrier_tracking_number" /></td>
+                     <td><input type="text" name="carrier_tracking_number" id="carrier_tracking_number"/></td>
                </tr>
                 <tr>
                     <td><label for="invoice_Amount">Invoice Amount:</label></td> 
-                    <td><input type="text" name="invoice_amount" /></td>
+                    <td><input type="text" name="invoice_amount" id="invoice_amount"/></td>
                </tr>
           </table>
             <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
@@ -67,6 +67,6 @@
             </table>
         </div>  
         <br>
-       <input type="submit" value="Add New" tabindex="6" id="submit" name="submit" class="button button-primary" onclick="return confirm('Are you sure you want to add fulfilment?')" />
+       <input type="submit" value="Add New" tabindex="6" id="submit" name="submit" class="button button-primary" />
     </form>
 </div>

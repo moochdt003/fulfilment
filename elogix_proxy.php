@@ -175,8 +175,10 @@ class ElogixProxy {
                 curl_close($ch);
 
                 $result = json_decode($result_json);
-                if ($result->error) {
+                var_dump($result);
+                if (isset($result->error)) {
                     $error = $result->error->code;
+                    
                 }
             }
 
@@ -188,3 +190,5 @@ class ElogixProxy {
         
     
 }
+
+ElogixProxy::tracking_request('FNO-E503D0EA-BC1C',null,null);

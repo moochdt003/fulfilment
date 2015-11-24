@@ -33,4 +33,34 @@ jQuery(function($){
             
             
         });
+        
+     
+        
    });
+   
+   function validateForm(add_fulfilment)   
+        {
+            var messages = [];
+            if (document.add_fulfilment.online_store.value=="")
+            {
+                messages.push("Online store is required");
+            }
+            if (document.add_fulfilment.inbound_carrier.value=="")
+            {
+                messages.push("Carrier name is required");
+            }
+            if (document.add_fulfilment.carrier_tracking_number.value=="")
+            {
+                messages.push("Tracking Number is required");
+            }
+            if (document.add_fulfilment.invoice_amount.value=="")
+            {
+                messages.push("Invoice amount is required");
+            }
+            if (messages.length > 0) {
+                alert(messages.join('\n'));
+                return false;
+            } else {
+                return true;
+            }
+        }   

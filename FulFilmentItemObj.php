@@ -6,4 +6,6 @@ class FulfilmentItemObj {
     public $order_item_id;
     public $quantity;
     public $item_price;
+    
+   
 }
